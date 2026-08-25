@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="hi" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>हिंदी ज्ञानदीप - अखबार पढ़ना सीखें</title>
+  
+  <!-- PWA & Mobile Web App Meta -->
+  <meta name="theme-color" content="#1E3A8A">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="हिंदी ज्ञानदीप">
+  <meta name="description" content="हिंदी पढ़ना सीखने और अखबार पढ़ने का आसान व रोचक खेल">
+
+  <!-- Icons & Manifest -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div id="app">
+    <!-- शीर्ष हेडर बार -->
+    <header class="app-header">
+      <div class="header-left">
+        <a href="#" class="app-brand" data-nav="home">
+          <img src="icons/favicon.svg" alt="ज्ञानदीप" class="logo-icon">
+          <span>हिंदी ज्ञानदीप</span>
+        </a>
+      </div>
+      <div class="header-right">
+        <div class="streak-badge" title="दैनिक अभ्यास">
+          <span>🔥</span>
+          <span id="header-streak-count">1 दिन</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- =====================================================================
+         स्क्रीन १: मुख्य होम स्क्रीन (Home Screen)
+         ===================================================================== -->
+    <main id="screen-home" class="screen active">
+      <div class="home-hero">
+        <div class="home-diya-badge">
+          <img src="icons/favicon.svg" alt="ज्ञान का दीपक">
+        </div>
+        <h1 class="home-title">हिंदी ज्ञानदीप</h1>
+        <p class="home-subtitle">अक्षर से अखबार पढ़ना सीखें</p>
+      </div>
+
+      <!-- प्रगति कार्ड -->
+      <div class="home-progress-card">
+        <div class="progress-info">
+          <h4>आपकी वर्तमान स्थिति:</h4>
+          <div class="level-display" id="home-current-level">स्तर १</div>
+        </div>
+        <div class="stars-summary">
+          <span>⭐</span>
+          <span id="home-stars-count">०</span>
+        </div>
+      </div>
+
+      <!-- मुख्य नेविगेशन बटन ग्रिड -->
+      <div class="home-nav-grid">
+        <!-- मुख्य खेल बटन -->
+        <button class="big-nav-btn primary" id="btn-continue-play">
+          <div class="nav-btn-content">
+            <span class="nav-btn-icon">▶️</span>
+            <div class="nav-btn-texts">
+              <span class="nav-btn-title">खेल शुरू करें</span>
+              <span class="nav-btn-desc">अगला अभ्यास खेलें</span>
+            </div>
+          </div>
+          <span class="nav-btn-arrow">➔</span>
+        </button>
+
+        <!-- सभी स्तर -->
+        <button class="big-nav-btn" data-nav="levels">
+          <div class="nav-btn-content">
+            <span class="nav-btn-icon">🗺️</span>
+            <div class="nav-btn-texts">
+              <span class="nav-btn-title">सभी स्तर (१००+ स्तर)</span>
+              <span class="nav-btn-desc">शुरुआत से अखबार तक का सफ़र</span>
+            </div>
+          </div>
+          <span class="nav-btn-arrow">➔</span>
+        </button>
+
+        <!-- अखबार कॉर्नर -->
+        <button class="big-nav-btn newspaper-btn" data-nav="newspaper">
+          <div class="nav-btn-content">
+            <span class="nav-btn-icon">📰</span>
+            <div class="nav-btn-texts">
+              <span class="nav-btn-title">अखबार कॉर्नर (दैनिक ज्ञान)</span>
+              <span class="nav-btn-desc">देश, खेती, मौसम व सेहत के समाचार</span>
+            </div>
+          </div>
+          <span class="nav-btn-arrow">➔</span>
+        </button>
+
+        <!-- ल, र, य विशेष ध्वनि चार्ट -->
+        <button class="big-nav-btn confusion-btn" data-nav="soundchart">
+          <div class="nav-btn-content">
+            <span class="nav-btn-icon">🔊</span>
+            <div class="nav-btn-texts">
+              <span class="nav-btn-title">ल, र, य ध्वनि चार्ट</span>
+              <span class="nav-btn-desc">अक्षरों को छूकर आवाज़ सुनें</span>
+            </div>
+          </div>
+          <span class="nav-btn-arrow">➔</span>
+        </button>
+
+        <!-- प्रगति व अभ्यास रिपोर्ट -->
+        <button class="big-nav-btn sound-btn" data-nav="progress">
+          <div class="nav-btn-content">
+            <span class="nav-btn-icon">📊</span>
+            <div class="nav-btn-texts">
+              <span class="nav-btn-title">प्रगति व रिवीजन</span>
+              <span class="nav-btn-desc">कठिन शब्दों का दोबारा अभ्यास</span>
+            </div>
+          </div>
+          <span class="nav-btn-arrow">➔</span>
+        </button>
+      </div>
+
+      <!-- PWA फ़ोन में इनस्टॉल बैनर -->
+      <div class="install-banner" id="install-banner">
+        <div class="install-banner-text">📲 ऐप को फ़ोन में जोड़ें</div>
+        <button class="install-btn" id="install-app-btn">इनस्टॉल करें</button>
+      </div>
+    </main>
+
+    <!-- =====================================================================
+         स्क्रीन २: स्तर चयन स्क्रीन (Levels Select - 100+ Levels)
+         ===================================================================== -->
+    <main id="screen-levels" class="screen">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+        <button class="header-btn btn-back" data-to="home">⬅ मुख्य पृष्ठ</button>
+        <h2 style="font-size:1.4rem; color:var(--text-gold);">सभी स्तर</h2>
+      </div>
+
+      <div class="stages-wrapper" id="stages-container">
+        <!-- JavaScript द्वारा सभी ६ चरण व १०५ स्तर रेंडर होंगे -->
+      </div>
+    </main>
+
+    <!-- =====================================================================
+         स्क्रीन ३: मुख्य खेल स्क्रीन (Game Play Screen)
+         ===================================================================== -->
+    <main id="screen-game" class="screen">
+      <!-- टॉप बार -->
+      <div class="game-top-bar">
+        <button class="header-btn btn-back" data-to="levels">⬅ स्तर सूची</button>
+        <div class="game-progress-bar-container">
+          <div class="game-progress-bar-fill" id="game-progress-fill"></div>
+        </div>
+        <div class="q-counter-badge" id="game-q-counter">1/20</div>
+      </div>
+
+      <div style="font-size:1.15rem; color:var(--text-gold); font-weight:800; margin-bottom:10px;" id="game-level-title">
+        स्तर १
+      </div>
+
+      <!-- प्रश्न कार्ड -->
+      <div class="question-container">
+        <div class="question-instruction" id="game-instruction-text">
+          <span>📢</span> आवाज़ सुनकर सही शब्द चुनें
+        </div>
+
+        <!-- मुख्य आवाज़ बटन -->
+        <button class="audio-speak-btn" id="btn-speak-question">
+          <span>🔊</span>
+          <span>फिर से सुनें</span>
+        </button>
+
+        <div>
+          <button class="slow-audio-btn" id="btn-slow-audio">
+            <span>🐢 धीमी आवाज़</span>
+          </button>
+        </div>
+
+        <!-- अतिरिक्त संदर्भ / सुर्खी / पैराग्राफ कार्ड -->
+        <div class="target-display-card" id="game-target-display" style="display:none;">
+          <div class="target-text-sentence" id="target-display-text"></div>
+        </div>
+      </div>
+
+      <!-- प्रकार १: ४ बड़े विकल्प कार्ड -->
+      <div class="options-grid" id="game-options-container">
+        <!-- JavaScript द्वारा ४ बड़े बटन जोड़े जाएंगे -->
+      </div>
+
+      <!-- प्रकार २: वाक्य निर्माण क्षेत्र (Sentence Builder) -->
+      <div class="sentence-builder-area" id="game-sentence-container" style="display:none;">
+        <div class="sentence-drop-zone empty" id="sentence-drop-zone"></div>
+        <div class="word-pool-zone" id="sentence-pool-zone"></div>
+      </div>
+
+      <!-- निचला एक्शन व फीडबैक बार -->
+      <div class="game-bottom-bar">
+        <div class="feedback-banner" id="game-feedback-banner" style="display:none;"></div>
+        <button class="action-btn-primary" id="btn-check-sentence" style="display:none;">वाक्य जांचें ✔</button>
+        <button class="action-btn-primary" id="btn-next-question" style="display:none;">अगला प्रश्न ➔</button>
+      </div>
+    </main>
+
+    <!-- =====================================================================
+         स्क्रीन ४: अखबार कॉर्नर (Newspaper Reading Room)
+         ===================================================================== -->
+    <main id="screen-newspaper" class="screen">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+        <button class="header-btn btn-back" data-to="home">⬅ मुख्य पृष्ठ</button>
+        <h2 style="font-size:1.35rem; color:var(--text-gold);">अखबार कॉर्नर</h2>
+      </div>
+
+      <!-- समाचार श्रेणी टैब्स -->
+      <div class="newspaper-category-tabs" id="newspaper-tabs"></div>
+
+      <!-- अखबार कार्ड -->
+      <div class="newspaper-paper-card">
+        <div class="paper-header">
+          <div class="paper-masthead">दैनिक ज्ञानदीप</div>
+          <div class="paper-meta">
+            <span id="paper-edition-tag">राष्ट्रीय संस्करण</span> • <span id="paper-date-tag">दैनिक ज्ञानदीप</span>
+          </div>
+        </div>
+
+        <h3 class="paper-headline" id="paper-headline-text">समाचार की मुख्य सुर्खी</h3>
+        
+        <div class="paper-content" id="paper-content-text">
+          <!-- शब्द क्लिकेबल होंगे और छूने पर बोलेंगे -->
+        </div>
+
+        <div class="paper-audio-bar">
+          <span style="font-size:0.95rem; color:#475569; font-weight:700;">💡 किसी भी शब्द को छूकर आवाज़ सुनें</span>
+          <button id="btn-read-full-news">📢 पूरा समाचार सुनें</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- =====================================================================
+         स्क्रीन ५: ध्वनि व मात्रा चार्ट (ल, र, य विशेष तुलना)
+         ===================================================================== -->
+    <main id="screen-soundchart" class="screen">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+        <button class="header-btn btn-back" data-to="home">⬅ मुख्य पृष्ठ</button>
+        <h2 style="font-size:1.35rem; color:var(--text-gold);">ध्वनि चार्ट</h2>
+      </div>
+
+      <!-- ल, र, य विशेष भ्रम निवारण बॉक्स -->
+      <div class="confusion-highlight-box">
+        <h3 style="font-size:1.3rem; color:#F472B6; font-weight:800; text-align:center;">
+          🎯 'ल', 'र', 'य' विशेष तुलना
+        </h3>
+        <p style="font-size:1.05rem; color:#FBCFE8; text-align:center; margin-top:4px;">
+          कार्ड को छूकर उच्चारण का अंतर समझें
+        </p>
+        <div class="confusion-cards-row" id="confusion-cards-container"></div>
+      </div>
+
+      <!-- सभी वर्णमाला अक्षर -->
+      <div class="sound-section-title">सभी अक्षर (छूकर सुनें)</div>
+      <div class="sound-grid-letters" id="all-letters-grid"></div>
+    </main>
+
+    <!-- =====================================================================
+         स्क्रीन ६: प्रगति व अभ्यास रिपोर्ट
+         ===================================================================== -->
+    <main id="screen-progress" class="screen">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+        <button class="header-btn btn-back" data-to="home">⬅ मुख्य पृष्ठ</button>
+        <h2 style="font-size:1.35rem; color:var(--text-gold);">प्रगति रिपोर्ट</h2>
+      </div>
+
+      <div class="stage-card" style="margin-bottom:16px;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; text-align:center;">
+          <div style="background:var(--bg-card-elevated); padding:12px; border-radius:12px;">
+            <div style="font-size:1rem; color:var(--text-muted);">कुल अंक</div>
+            <div style="font-size:1.8rem; font-weight:800; color:var(--text-gold);" id="report-total-score">०</div>
+          </div>
+          <div style="background:var(--bg-card-elevated); padding:12px; border-radius:12px;">
+            <div style="font-size:1rem; color:var(--text-muted);">कुल सितारे</div>
+            <div style="font-size:1.8rem; font-weight:800; color:#FBBF24;" id="report-total-stars">०</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sound-section-title">कठिन शब्दों का पुनः अभ्यास</div>
+      <div id="mistakes-list-container"></div>
+    </main>
+
+  </div>
+
+  <!-- =====================================================================
+       मोडल १: स्तर पूर्ण बधाई संदेश
+       ===================================================================== -->
+  <div class="modal-overlay" id="level-complete-modal">
+    <div class="modal-card">
+      <div class="modal-stars-row" id="modal-stars-container">
+        <span>⭐</span><span>⭐</span><span>⭐</span>
+      </div>
+      <h2 class="modal-title" id="modal-win-title">शाबाश!</h2>
+      <p class="modal-body-text" id="modal-win-desc">आपने यह स्तर सफलता पूर्वक पूरा कर लिया है!</p>
+      
+      <button class="action-btn-primary" id="modal-next-level-btn">अगला स्तर ➔</button>
+      <button class="action-btn-secondary" id="modal-replay-btn">फिर से खेलें ↺</button>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       मोडल २: महा-प्रमाण पत्र (अखबार मास्टर)
+       ===================================================================== -->
+  <div class="modal-overlay" id="certificate-modal">
+    <div class="modal-card" style="max-width:500px;">
+      <div class="certificate-frame">
+        <div style="font-size:2.5rem; margin-bottom:4px;">🎖️</div>
+        <div class="cert-title">अखबार मास्टर प्रमाण पत्र</div>
+        <p class="cert-desc">
+          हार्दिक बधाई! आपने हिंदी ज्ञानदीप के सभी चरणों को पूरा करके अखबार और पुस्तकें पढ़ने की योग्यता हासिल कर ली है।
+        </p>
+      </div>
+      <button class="action-btn-primary" onclick="app.closeModal('certificate-modal')">धन्यवाद ✔</button>
+    </div>
+  </div>
+
+  <!-- टोस्ट संदेश -->
+  <div class="toast" id="toast"></div>
+
+  <!-- जावास्क्रिप्ट फाइलें -->
+  <script src="js/audio.js"></script>
+  <script src="js/levels-data.js"></script>
+  <script src="js/newspaper-data.js"></script>
+  <script src="js/game-engine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

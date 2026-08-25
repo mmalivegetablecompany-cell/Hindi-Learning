@@ -1,0 +1,7 @@
+/* Google Fonts & Devanagari Typography */
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700;900&family=Yatra+One&display=swap');
+
+:root {
+  --font-primary: 'Noto Sans Devanagari', 'Mukta', 'Mangal', 'Nirmala UI', sans-serif;
+  --font-heading: 'Yatra One', 'Noto Sans Devanagari', 'Mukta', sans-serif;
+}

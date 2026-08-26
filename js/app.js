@@ -262,11 +262,9 @@ class App {
 
       for (let lvlNum = startLvl; lvlNum <= endLvl; lvlNum++) {
         const box = document.createElement('button');
-        box.className = 'level-box';
+        box.className = 'level-box unlocked';
 
         const isCompleted = !!game.state.completedLevels[lvlNum];
-        const isUnlocked = lvlNum <= game.state.unlockedLevel;
-        const isCurrent = lvlNum === game.state.unlockedLevel;
 
         if (isCompleted) {
           box.classList.add('completed');
@@ -276,23 +274,14 @@ class App {
             <span class="level-num">${lvlNum}</span>
             <span class="level-stars">${starsText}</span>
           `;
-          box.addEventListener('click', () => this.startLevelGame(lvlNum));
-        } else if (isUnlocked) {
-          box.classList.add('unlocked');
-          if (isCurrent) box.classList.add('current');
+        } else {
           box.innerHTML = `
             <span class="level-num">${lvlNum}</span>
-            <span class="level-stars">शुरू करें</span>
-          `;
-          box.addEventListener('click', () => this.startLevelGame(lvlNum));
-        } else {
-          box.classList.add('locked');
-          box.innerHTML = `
-            <span class="lock-icon">🔒</span>
-            <span class="level-num" style="font-size:1.1rem">${lvlNum}</span>
+            <span class="level-stars">स्तर ${lvlNum}</span>
           `;
         }
 
+        box.addEventListener('click', () => this.startLevelGame(lvlNum));
         grid.appendChild(box);
       }
     });
@@ -408,14 +397,17 @@ class App {
     }
   }
 
-  // 4 बहुविकल्पीय कार्ड रेंडर करना
+  // 4 बहुविकल्पीय कार्ड रेंडर करना (सदा यादृच्छिक क्रम में)
   renderChoiceOptions(options) {
     const container = document.getElementById('game-options-container');
     if (!container) return;
 
     container.innerHTML = '';
 
-    options.forEach(opt => {
+    // विकल्पों को हमेशा यादृच्छिक (Random Shuffle) क्रम में दिखाएं
+    const shuffled = levelRepo.shuffleOptions(options);
+
+    shuffled.forEach(opt => {
       const btn = document.createElement('button');
       btn.className = 'option-btn';
       btn.textContent = opt;

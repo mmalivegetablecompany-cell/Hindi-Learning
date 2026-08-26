@@ -35,7 +35,7 @@ class GameEngine {
     }
 
     return {
-      unlockedLevel: 1,
+      unlockedLevel: 105, // सभी १०५ स्तर पहले से खुले हैं
       completedLevels: {}, // { levelNum: { stars: 3, score: 100 } }
       totalScore: 0,
       streakDays: 1,
@@ -98,10 +98,11 @@ class GameEngine {
     this.currentQuestion = this.currentLevelData.questions[index];
     this.answeredCurrent = false;
 
-    // यदि वाक्य निर्माण है तो टोकन तैयार करें
+    // यदि वाक्य निर्माण है तो भ्रामक शब्दों सहित पूरा पूल तैयार करें
     if (this.currentQuestion.type === 'sentence_build') {
       this.sentenceSelectedWords = [];
-      this.sentenceAvailableWords = [...this.currentQuestion.jumbled];
+      const pool = this.currentQuestion.pool || this.currentQuestion.jumbled || this.currentQuestion.sentence;
+      this.sentenceAvailableWords = levelRepo.shuffleArray([...pool]);
     }
 
     return this.currentQuestion;
